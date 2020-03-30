@@ -6,3 +6,7 @@
 ### Platform: ios
 
 ### Feature: 
+Reminder: wash your hands, don’t touch your face
+
+rank who has stayed for the longest time
+
