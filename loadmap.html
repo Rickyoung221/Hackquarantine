@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -41,6 +42,20 @@
         line-height: 30px;
         padding-left: 10px;
       }
+      .uk-icon {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    padding: 0;
+    background-color: transparent;
+    display: inline-block;
+    fill: currentcolor;
+    line-height: 0;
+}
     </style>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -56,6 +71,11 @@
   </head>
 
   <body>
+
+
+
+
+
     <div id="floating-panel1">
       <input id="address" type="textbox" value="Los Angeles, CA">
       <input id="submit" type="button" value="Enter">
@@ -83,28 +103,35 @@
       function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {zoom: 11});
         infowindow = new google.maps.InfoWindow({
-              content: contentString
+             // content: contentString
           });
-        //Geocode to Los Angeles initially
           var geocoder = new google.maps.Geocoder;
         //Geocd User's location
-        // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-
             infoWindow.setPosition(pos);
             infoWindow.setContent('Your Current Location.');
-            infoWindow.open(map);
+            //Mark, Click event and infor windown
+            var user_marker = new google.maps.Marker({
+              map: map,
+              position: pos
+            });
+            markers.push(user_marker);
+            //Information window
+            marker.addListener('click', function () {
+              infowindow.open(map, user_marker);
+            });
+            //infoWindow.open(map);
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
         } else {
-          // Browser doesn't support Geolocation
+          // If Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
@@ -127,11 +154,11 @@
                     status);
           }
         });
-        //Gecode the city by enter the name or zipcode
+        //Gecode the city by enter the name or zipcode, address
           document.getElementById('submit').addEventListener('click', function() {
           geocodeAddress(geocoder, map);
         })
-          cityboundries();
+          cityboundary();
       }
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -166,7 +193,7 @@
       }
 
 
-        //Search and Geocode location, set a marker
+      //Search and Geocode location, set a marker
       function geocodeAddress(geocoder, resultsMap) {
         var address = document.getElementById('address').value;
         geocoder.geocode({'address': address}, function(results, status) {
@@ -184,8 +211,8 @@
         });
       }
 
-      //Import city boundries geojson data
-      function cityboundries(){
+      //Import city boundary geojson data
+      function cityboundary(){
            infoWindow = new google.maps.InfoWindow;
            map.data.loadGeoJson('gz_2010_us_050_00_500k.json');
            //Style setting
@@ -206,7 +233,7 @@
             // When the user clicks, set 'isColorful', changing the color of the letters.
             map.data.addListener('click', function(event) {
                 map.data.overrideStyle(event.feature, {fillColor: '#3399FF',fillOpacity:0.3, strokeOpacity:0.7, strokeWeight: 3.5});
-                
+
             //show an infowindow on click
 				infoWindow.setContent('<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"> County: '+
 											event.feature.getProperty("NAME")  +"<br/>Novel Coronavirus Cases: " + event.feature.getProperty("value") + "</div>");
