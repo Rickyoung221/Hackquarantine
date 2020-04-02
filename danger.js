@@ -11,19 +11,28 @@
  * numPop: number of population of the current county
  * 
 */
+
+
+const contactRate = 10;
+const sigma = 1.0/7.0;
 class DangerCalculator {
     constructor(timeOut, numInf, numPop) {
         this.time = timeOut;
         this.numInf = numInf;
         this.numPop = numPop;
     }; 
+    calcPercentInfected() {
+        return this.numInf / this.numPop;
+    }
     calcDangerIndex() {
-        var contactRate = 10;
-        var sigma = 1.0/7.0;
-        var percentInfected = this.numInf / this.numPop;
-        return 1 - Math.exp(-1 * sigma * percentInfected * contactRate * this.time);
+        return 1 - Math.exp(-1 * sigma * calcPercentInfected() * contactRate * this.time);
     };
+    getHalfDanger() {
+        return -1 * Math.log(0.5) / contactRate * sigma * calcPercentInfected();
+    }
 };
+
+
 // March 30 Data, calculate the probability of being infected 
 // if not staying at home for 1440 minutes (24 hours)
 let calc = new DangerCalculator(1440, 3000,10000000); 
