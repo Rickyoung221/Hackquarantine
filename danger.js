@@ -18,24 +18,40 @@ const sigma = 1.0/7.0;
 class DangerCalculator {
     constructor(timeOut, numInf, numPop) {
         this.time = timeOut;
-        this.numInf = numInf;
+        // always assume there is at least one person infected to make sense of the mode
+        if (numInf == 0) {
+            this.numInf = numInf + 1;
+        }
+        else {
+            this.numInf = numInf;
+        }
         this.numPop = numPop;
     }; 
-    calcPercentInfected() {
-        return this.numInf / this.numPop;
+    // 0-4: different level of danger
+    calcRange() {
+        let prob = 1 - Math.exp(-1 * sigma * this.numInf / this.numPop * contactRate * this.time);
+        if (prob < 0.2) {
+            return 0;
+        } else if (prob < 0.4) {
+            return 1;
+        } else if (prob < 0.6) {
+            return 2;
+        } else if (prob < 0.8) {
+            return 3;
+        } else {
+            return 4;
+        }
     }
-    calcDangerIndex() {
-        return 1 - Math.exp(-1 * sigma * calcPercentInfected() * contactRate * this.time);
-    };
-    getHalfDanger() {
-        return -1 * Math.log(0.5) / contactRate * sigma * calcPercentInfected();
-    }
+    
 };
 
 
 // March 30 Data, calculate the probability of being infected 
 // if not staying at home for 1440 minutes (24 hours)
+
+/*
+//========test=========//
 let calc = new DangerCalculator(1440, 3000,10000000); 
 console.log(calc.calcDangerIndex());
-
-
+//========test=========//
+*/
