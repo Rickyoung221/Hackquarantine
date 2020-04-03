@@ -4,6 +4,10 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="507764879519-qu9frph9gsjlouprblmmj5dciq6la26u.apps.googleusercontent.com.apps.googleusercontent.com.apps.googleusercontent.com">
+
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -67,20 +71,18 @@
       <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 
   </head>
 
   <body>
 
-
-
-
-
     <div id="floating-panel1">
       <input id="address" type="textbox" value="Los Angeles, CA">
       <input id="submit" type="button" value="Enter">
     </div>
-
+     <div class="g-signin2" data-onsuccess="onSignIn"></div>
      <div id="floating-panel2">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
@@ -244,13 +246,29 @@
             map.data.addListener('mousedown', function(event) {
                 map.data.revertStyle();
             });
-
-
+      }
+      //Google sign in
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
       }
 
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDet-rQNX5noBLzcyeLf-FK0mT9cVYOPCo&callback=initMap">
+    </script>
+
+  <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
     </script>
   </body>
 
