@@ -6,7 +6,13 @@ import pprint
 from apscheduler.schedulers.blocking import BlockingScheduler
 import schedule
 import time
+import pymongo
+from pymongo import (MongoClient,)
 
+client = pymongo.MongoClient("mongodb+srv://Perry998:test@cluster0-bd2oz.mongodb.net/test?retryWrites=true&w=majority")
+db = client.get_database("covid")
+col_death = db.get_collection("death")
+col_confirmed = db.get_collection("confirmed")
 
 sched = BlockingScheduler()
 
@@ -54,8 +60,12 @@ def collectData():
             else:
                 county_list = data_confirmed[state]
                 county_list.append({county: cases})
+            # col_confirmed.insert_one({"state": state, "county": county, "confirmed": cases})
+            query = {"county": county, "state": state}
+            newvalues= {"$set": {"confirmed": cases}}
+            col_confirmed.update_one(query, newvalues)
 
-    # read the latest data of COVID_19 confirmed deaths in all counties
+    # read the latest data of COVID_19 deaths in all counties
     with open('death.csv') as csv_death:
         next(csv_death)
         for line in csv_death.readlines():
@@ -70,13 +80,18 @@ def collectData():
             else:
                 county_list = data_death[state]
                 county_list.append({county: cases})
+            # col_death.insert_one({"state": state, "county": county, "death": cases})
+            query = {"county": county, "state": state}
+            newvalues= {"$set": {"death": cases}}
+            col_death.update_one(query, newvalues)
 
 timed_job()
 collectData()
-json_confirmed = json.dumps(data_confirmed)
-json_confirmed = json.dumps(data_death)
 
-with open('data_death.json', 'w') as outfile:
-    json.dump(data_death, outfile)
-with open('data_confirmed.json', 'w') as outfile:
-    json.dump(data_confirmed, outfile)
+# with open('data_death.json', 'w') as outfile:
+#     json.dump(data_death, outfile)
+# with open('data_confirmed.json', 'w') as outfile:
+#     json.dump(data_confirmed, outfile)
+
+
+
