@@ -34,6 +34,7 @@
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
     <li data-target="#demo" data-slide-to="1"></li>
+	<li data-target="#demo" data-slide-to="2"></li>
   </ul>
   <!-- The slideshow -->
   <div class="carousel-inner">
@@ -49,11 +50,17 @@
 	  <div class ="status_con">
            <div class = "status">
       		 <h2>Worldwide Confirmed Cases</h2>
-      		 <h3 id="td1"></h3>
+      		 <h3 id="td1">1,696,284
+			 </h3>
+			 <script>
+			 	$(function(){
+			       $("#td1").text(world);
+			    });
+			 </script>
       	 </div>
       	 <div class = "status">
       	 		 <h2>American Confirmed Cases</h2>
-      	 		 <h3 id="td2"></h3>
+      	 		 <h3 id="td2">501,272</h3>
       	 </div>
       </div>
           </div>
@@ -70,15 +77,53 @@
 		   
          </div>
 		 <div class="status">
-			 <div id="add_con">
-		 <input id="address" type="textbox" value="Los Angeles, CA">
-		       <input id="submit" type="button" value="Enter">
-			   </div>
+			<h2>Time Stay At home:</h2>
+			<h2>00 days 00 hours</h2>
 		</div>
        </div>
       </section>
 	  
     </div>
+	<div class="carousel-item">
+	 <section id="home">
+	   <div class="banner-container">
+		  <div class="heading text-center">
+			  <h2></h2>
+					<h3>Profile Setting</h3>	
+		  </div>
+		 <div class="container">
+		 	<div class="row">
+		 		<div class="col-lg-3 col-sm-6">
+		 
+		             <div class="card hovercard">
+		                 <div class="cardheader">
+		 
+		                 </div>
+		                 <div class="avatar">
+		                     <img alt="" src="images/covlogo.jpg">
+		                 </div>
+		                 <div class="info">
+		                     <div class="title">
+		                         	<h2>Hack Quarantine</h2>
+							<h2>Address</h2>
+							<input type="text" id="Address" placeholder="Your Address..">
+							<h2>Age</h2>
+							<input type="text" id="Address" placeholder="Your Age..">
+							<h2>Health</h2>
+							<input type="text" id="Address" placeholder="Your Health Status..">
+		                     </div>
+		                 </div>
+		                 
+		             </div>
+		 
+		         </div>
+		 
+		 	</div>
+		 </div>
+	   </div>
+	  </section>
+	  
+	</div>
   </div>
   <!-- Left and right controls -->
   <a class="carousel-control-prev" href="#demo" data-slide="prev">
@@ -91,21 +136,13 @@
 
 </body>
 <script src="./js/custom.js"></script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDet-rQNX5noBLzcyeLf-FK0mT9cVYOPCo&callback=initMap">
-</script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDet-rQNX5noBLzcyeLf-FK0mT9cVYOPCo&callback=initMap">
+    </script>
+
 <script>
-  $(document).ready(function(){
-    $(function (){
-        htmlobj = $.ajax({
-            url: "http://127.0.0.1:5000/", 
-            async: false
-        });
-        $("#td1").html(htmlobj.response);
-  });
+	$(function(){      $("#td1").text(world);   });
 </script>
-
-
 
 	
 </html>
