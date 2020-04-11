@@ -10,5 +10,5 @@
 4. (The web app is not yet packed into an iOS app)
 
 ### Feature: 
-Reminder: wash your hands, don’t touch your face
+Reminder: wash your hands, don’t touch your face, and stay home when you're away from home more than 15 minutes
 
