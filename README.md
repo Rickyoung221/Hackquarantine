@@ -1,12 +1,14 @@
-# Hackquarantine
+# StayHome
 
-### 暂定IDEA:
-1. 一个移动端记录用户位置和活动路径，然后根据该区感染人数和上涨频率分析风险，然后一直待在家达到一个时限可以解锁什么icon之类
+### IDEA:
+1. An app that keeps track on people's movement and provide information of latest COVID-19 situation statewide as well as connecting 
 
-### Platform: ios
+### How to run:
+1. clone the repository
+2. go into server folder and run "python server.py" to start the back end server
+3. you're good to go
+4. (The web app is not yet packed into an iOS app)
 
 ### Feature: 
 Reminder: wash your hands, don’t touch your face
-
-rank who has stayed for the longest time
 
