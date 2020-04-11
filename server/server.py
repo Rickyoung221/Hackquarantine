@@ -21,7 +21,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])    # testing
 def index():
     world, usa = front()
-    return {'world': world, 'usa': usa}
+    return json.dumps({'world': world, 'usa': usa})
 
 @app.route('/<state>/<county>', methods=['GET'])    # get confirmed and death cases of covid-19 for each county
 def getData(state, county):
