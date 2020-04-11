@@ -2,6 +2,7 @@ import json
 import pymongo
 from pymongo import (MongoClient,)
 from flask import Flask, render_template
+from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
 
@@ -17,7 +18,7 @@ col_confirmed = db.get_collection("confirmed")
 col_death = db.get_collection("death")
 
 app = Flask(__name__)
-
+CORS(app, resources=r'/*')
 @app.route('/', methods=['GET'])    # testing
 def index():
     world, usa = front()

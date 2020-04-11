@@ -50,17 +50,13 @@
 	  <div class ="status_con">
            <div class = "status">
       		 <h2>Worldwide Confirmed Cases</h2>
-      		 <h3 id="td1">1,696,284
-			 </h3>
-			 <script>
-			 	$(function(){
-			       $("#td1").text(world);
-			    });
-			 </script>
+      		 <h3 id="td1"></h3>
+			
+			 
       	 </div>
       	 <div class = "status">
       	 		 <h2>American Confirmed Cases</h2>
-      	 		 <h3 id="td2">501,272</h3>
+      	 		 <h3 id="td2"></h3>
       	 </div>
       </div>
           </div>
@@ -141,7 +137,22 @@
     </script>
 
 <script>
-	$(function(){      $("#td1").text(world);   });
+    $.ajax({
+            // 请求后台数据
+            url:"http://127.0.0.1:5000/",
+            contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (res) {
+             $("#td1").html(res.world);
+             $("#td2").html(res.usa);
+            },
+            error: function () {
+
+            
+            }
+        });
 </script>
 
 	
